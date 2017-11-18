@@ -31,12 +31,24 @@ services:
 
   db:
     image: mariadb:latest
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: drupalcamp
     networks:
       - webnet
       
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+     - PMA_ARBITRARY=0
+     - PMA_HOST=db
+     - PMA_USER=root
+     - PMA_PASSWORD=drupalcamp
+    ports:
+     - 8091:80
+    networks:
+      - webnet
+
   share:
     image: dperson/samba
     ports:
